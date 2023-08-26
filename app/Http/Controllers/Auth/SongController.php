@@ -44,6 +44,21 @@ class SongController extends Controller
      */
     public function destroy(Song $song)
     {
-        //
+        try {
+            $user_id = $song->user_id;
+            $currentSong = public_path() . "/songs/" . $user_id . "/" . $song->song;
+            if (file_exists($currentSong)) {
+                unlink($currentSong);
+            }
+
+            $song->delete();
+
+            return response()->json('Song deleted', 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Something went wrong in SongController.destroy',
+                'error' => $e->getMessage()
+            ], 400);
+        }
     }
 }
