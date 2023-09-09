@@ -10,10 +10,31 @@ use App\Http\Requests\Post\UpdatePostRequest;
 
 class PostController extends Controller
 {
+    public function index()
+    {
+        try {
+            $postPerPage = 1;
+            $posts = Post::with('user')
+                ->orderBy('updated_at', 'DESC')
+                ->simplePaginate($postPerPage);
+            return response()->json([
+                'posts' => $posts,
+                'pageCount' => ceil(count(Post::all()) / $postPerPage)
+            ]);
+        } catch (\Throwable $e) {
+            return response()->json([
+                'message' => 'Something went wrong in PostController.index',
+                'error' => $e->getMessage()
+            ], 400);
+        }
+    }
+
+
+
     /**
      * Display a listing of the resource.
      */
-    public function getPosts(int $userId)
+    public function getUserPosts(int $userId)
     {
         try {
             $posts = Post::where('user_id', $userId)->get();

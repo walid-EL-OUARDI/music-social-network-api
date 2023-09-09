@@ -27,7 +27,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('song', SongController::class);
     Route::get('songs/{id}', [SongsByUserController::class, 'index']);
     Route::resource('video', VideoController::class);
-    Route::get('posts/{user_id}', [PostController::class, 'getPosts']);
+    Route::get('posts/{user_id}', [PostController::class, 'getUserPosts']);
     Route::resource('post', PostController::class);
+    Route::get('posts', [PostController::class, 'index']);
     Route::post('/logout', [AuthController::class, 'logout']);
 });
