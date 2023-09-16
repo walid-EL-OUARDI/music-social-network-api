@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('email')->unique();
+            $table->boolean('email_verified')->default(false);
             $table->text('image')->nullable();
             $table->text('location')->nullable();
             $table->text('description')->nullable();

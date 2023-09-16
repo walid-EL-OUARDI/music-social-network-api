@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\PostController;
 use App\Http\Controllers\Auth\SongController;
 use App\Http\Controllers\Auth\UserController;
+use App\Http\Controllers\Auth\EmailController;
 use App\Http\Controllers\Auth\VideoController;
 use App\Http\Controllers\Auth\SongsByUserController;
 
@@ -23,6 +24,8 @@ use App\Http\Controllers\Auth\SongsByUserController;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
+    Route::get('email/verify/{email}', [EmailController::class, 'sendVerifyEmail']);
+    Route::post('verify-email/{id}/{hash}', [EmailController::class, 'verifyEmail']);
     Route::resource('user', UserController::class);
     Route::resource('song', SongController::class);
     Route::get('songs/{id}', [SongsByUserController::class, 'index']);

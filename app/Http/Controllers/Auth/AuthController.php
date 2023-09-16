@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Auth;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\LoginRequest;
-use App\Http\Requests\Auth\RegisterRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\Auth\RegisterRequest;
 
 class AuthController extends Controller
 {
@@ -38,7 +38,7 @@ class AuthController extends Controller
 
             return response()->json(['user' => $user, 'token' => $token], 200);
         }
-        return response()->json(['error' => 'Something went wrong in login']);
+        return response()->json(['error' => 'Something went wrong in login'], 400);
     }
 
     public function logout()
