@@ -21,10 +21,13 @@ class PasswordController extends Controller
     public function sendPasswordResetLink(ResetPasswordRequest $request)
     {
         try {
+            $user = User::where('email', $request->email)->first();
+            $userName = $user->first_name;
             $token = Str::random(40);
             $domaine = env('VITE_VUE_APP_URL');
             $url = $domaine . 'profile/reset-password/?token=' . $token;
             $mailData = [
+                'name' => $userName,
                 'title' => 'Reset Password',
                 'body' => 'Please Click on the link to Reset Your Password.',
                 'url' => $url

@@ -15,11 +15,14 @@ class EmailController extends Controller
     public function sendVerifyEmail(String $email)
     {
         try {
+            $user = User::where('email', $email)->first();
+            $userName = $user->first_name;
             $hashedEmail = sha1($email);
             $domaine = env('VITE_VUE_APP_URL');
             $url = $domaine . 'profile/verify-email/' . Auth::user()->id . '/' . $hashedEmail;
             // $email = $user->email;
             $mailData = [
+                'name' => $userName,
                 'title' => 'Email Verification',
                 'body' => 'Please Click on the link to confirm your email address and activate your account.',
                 'url' => $url
